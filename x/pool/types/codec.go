@@ -2,11 +2,17 @@ package types
 
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/codec/legacy"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func RegisterCodec(_ *codec.LegacyAmino) {}
+func RegisterCodec(cdc *codec.LegacyAmino) {
+	println("----->", ModuleName)
+	//cdc.RegisterConcrete(&MsgFundPool{}, ModuleName+"/FundPool", nil)
+	legacy.RegisterAminoMsg(cdc, &MsgFundPool{}, "cosmos-sdk/MsgFundPool")
+}
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil), &MsgFundPool{})
@@ -22,5 +28,13 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 
 var (
 	Amino     = codec.NewLegacyAmino()
-	ModuleCdc = codec.NewProtoCodec(cdctypes.NewInterfaceRegistry())
+	ModuleCdc = codec.NewAminoCodec(Amino)
 )
+
+func init() {
+	println("init call")
+	RegisterCodec(Amino)
+	cryptocodec.RegisterCrypto(Amino)
+	sdk.RegisterLegacyAminoCodec(Amino)
+	//Amino.Seal()
+}

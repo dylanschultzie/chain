@@ -1,14 +1,15 @@
 package types
 
 import (
-	"encoding/json"
-
 	"cosmossdk.io/errors"
-
+	"encoding/json"
 	"github.com/KYVENetwork/chain/util"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	errorsTypes "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/cosmos/cosmos-sdk/x/auth/migrations/legacytx"
 )
+
+//const RouterKey = ModuleName
 
 var (
 	_ sdk.Msg = &MsgCreatePool{}
@@ -17,7 +18,33 @@ var (
 	_ sdk.Msg = &MsgEnablePool{}
 	_ sdk.Msg = &MsgScheduleRuntimeUpgrade{}
 	_ sdk.Msg = &MsgCancelRuntimeUpgrade{}
+	//_ sdk.Msg = &MsgFundPool{}
+
+	_ legacytx.LegacyMsg = &MsgFundPool{}
+	//_ legacytx.LegacyMsg = &MsgFundPool{}
 )
+
+func (msg MsgFundPool) Route() string { return "cosmos-sdk" }
+
+// Type implements the sdk.Msg interface.
+func (msg MsgFundPool) Type() string {
+	var t = sdk.MsgTypeURL(&msg)
+	println("type msg=======>", t)
+	return "msg_fund_pool"
+}
+
+// // GetSignBytes returns the message bytes to sign over.
+func (msg MsgFundPool) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+//func (msg MsgFundPool) Route() string {
+//	return RouterKey
+//}
+//
+//func (msg MsgFundPool) Type() string {
+//	return "fund_pool"
+//}
 
 // GetSigners returns the expected signers for a MsgCreatePool message.
 func (msg *MsgCreatePool) GetSigners() []sdk.AccAddress {

@@ -132,11 +132,11 @@ var xxx_messageInfo_MsgFundPoolResponse proto.InternalMessageInfo
 // MsgDefundPool defines a SDK message for defunding a pool.
 type MsgDefundPool struct {
 	// creator ...
-	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator"`
 	// id ...
-	Id uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	Id uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id"`
 	// amount ...
-	Amount uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Amount uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount"`
 }
 
 func (m *MsgDefundPool) Reset()         { *m = MsgDefundPool{} }

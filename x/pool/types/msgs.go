@@ -20,6 +20,7 @@ var (
 	_ sdk.Msg = &MsgCancelRuntimeUpgrade{}
 
 	_ legacytx.LegacyMsg = &MsgFundPool{}
+	_ legacytx.LegacyMsg = &MsgDefundPool{}
 )
 
 func (msg MsgFundPool) Route() string { return ModuleName }

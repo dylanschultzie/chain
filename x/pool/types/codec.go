@@ -10,6 +10,7 @@ import (
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	legacy.RegisterAminoMsg(cdc, &MsgFundPool{}, ModuleName+"/MsgFundPool")
+	legacy.RegisterAminoMsg(cdc, &MsgDefundPool{}, ModuleName+"/MsgDefundPool")
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {

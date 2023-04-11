@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"github.com/cosmos/cosmos-sdk/x/auth/migrations/legacytx"
 
 	"cosmossdk.io/errors"
 
@@ -17,7 +18,20 @@ var (
 	_ sdk.Msg = &MsgEnablePool{}
 	_ sdk.Msg = &MsgScheduleRuntimeUpgrade{}
 	_ sdk.Msg = &MsgCancelRuntimeUpgrade{}
+
+	_ legacytx.LegacyMsg = &MsgFundPool{}
 )
+
+func (msg MsgFundPool) Route() string { return ModuleName }
+
+func (msg MsgFundPool) Type() string {
+	return sdk.MsgTypeURL(&msg)
+}
+
+// GetSignBytes returns the message bytes to sign over.
+func (msg MsgFundPool) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
 
 // GetSigners returns the expected signers for a MsgCreatePool message.
 func (msg *MsgCreatePool) GetSigners() []sdk.AccAddress {

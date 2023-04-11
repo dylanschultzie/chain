@@ -1,10 +1,8 @@
 package types
 
 import (
-	"encoding/json"
-	"github.com/cosmos/cosmos-sdk/x/auth/migrations/legacytx"
-
 	"cosmossdk.io/errors"
+	"encoding/json"
 
 	"github.com/KYVENetwork/chain/util"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -18,9 +16,6 @@ var (
 	_ sdk.Msg = &MsgEnablePool{}
 	_ sdk.Msg = &MsgScheduleRuntimeUpgrade{}
 	_ sdk.Msg = &MsgCancelRuntimeUpgrade{}
-
-	_ legacytx.LegacyMsg = &MsgFundPool{}
-	_ legacytx.LegacyMsg = &MsgDefundPool{}
 )
 
 func (msg MsgFundPool) Route() string { return ModuleName }
